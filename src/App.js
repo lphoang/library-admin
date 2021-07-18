@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {Suspense} from 'react'
+import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom'
+import {Loading} from './components/Global/Loading'
+
+const Admin = React.lazy(() => import(`./components/Admin`));
+const Logout = React.lazy(() => import(`./components/Global/Logout`));
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <div className="App">
+            <Suspense fallback={<Loading/>}>
+                <BrowserRouter>
+                    <Switch>
+                        {/*ADMIN */}
+                        <Redirect from="/" exact to="/admin" />
+                        <Route exact path="/logout" component={Logout}/>
+                        <Route
+                            path='/admin'
+                            component={Admin}
+                        />
+                    </Switch>
+                </BrowserRouter>
+            </Suspense>
+        </div>
+    );
 }
 
 export default App;
