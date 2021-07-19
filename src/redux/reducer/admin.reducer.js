@@ -1,4 +1,4 @@
-import {LOGIN, CHECK_AUTH, SET_LOADING} from "../actionTypes";
+import {LOGIN, CHECK_AUTH, SET_LOADING, GET_BOOKS, CREATE_BOOK, UPDATE_BOOK, DELETE_BOOK, SET_ERROR} from "../actionTypes";
 import SecureLS from "secure-ls";
 
 let ls = new SecureLS({ encodingType: "aes", isCompression: false });
@@ -10,6 +10,13 @@ try {
 } catch (error) {}
 const initialState = {
     admin: null,
+    books: null,
+    createdBook: null,
+    pagination: {
+        currentPage: null,
+        totalItems: null,
+        totalPages: null,
+    },
     isAuthenticated:
         _admin_token !== null && _admin_token !== "null" &&_admin_token !== "",
     token: _admin_token || null,
@@ -25,11 +32,11 @@ export default function admin(state = initialState, action) {
             return {
                 ...state,
                 admin: action.payload.user,
-                success: !!action.payload.success,
-                isAuthenticated: !!action.payload.success,
-                token: action.payload.success ? action.payload.accessToken : null,
-                user_id: action.payload.success ? action.payload.user.id : null,
-                errors: action.payload.success ? null : action.payload.errors
+                success: !!action.payload.user.enabled,
+                isAuthenticated: !!action.payload.user.enabled,
+                token: action.payload.user.enabled ? action.payload.accessToken : null,
+                user_id: action.payload.user.enabled ? action.payload.user.id : null,
+                errors: action.payload.user.enabled ? null : action.payload.errors
             };
         }
         case CHECK_AUTH: {
@@ -40,11 +47,46 @@ export default function admin(state = initialState, action) {
                 user_id: action.payload.user.id,
             };
         }
+        case GET_BOOKS: {
+            return {
+                ...state,
+                books: action.payload.books,
+                pagination: {
+                    currentPage: action.payload.pagination.currentPage,
+                    totalItems: action.payload.pagination.totalItems,
+                    totalPages: action.payload.pagination.totalPages,
+                }
+            }
+        }
+        case CREATE_BOOK: {
+            return{
+                ...state,
+                errors: action.payload.errors,
+            }
+        }
+        case UPDATE_BOOK: {
+            return{
+                ...state,
+                errors: action.payload.errors,
+            }
+        }
+        case DELETE_BOOK: {
+            return{
+                ...state,
+                errors: action.payload.errors,
+            }
+        }
         case SET_LOADING: {
             return {
                 ...state,
                 loading: action.payload
             };
+        }
+        case SET_ERROR: {
+            return {
+                ...state,
+                errors: action.payload,
+            }
         }
         default:
             return state;

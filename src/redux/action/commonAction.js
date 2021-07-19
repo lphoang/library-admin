@@ -23,9 +23,9 @@ export const setSuccess = async (dispatch, bool) => {
     });
 };
 
-export const setError = async (dispatch, bool) => {
+export const setError = async (dispatch, errors) => {
     await dispatch({
         type: SET_ERROR,
-        payload: bool
+        payload: errors
     });
 }

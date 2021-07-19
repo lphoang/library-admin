@@ -1,5 +1,5 @@
 /* eslint-disable eqeqeq */
-import {LOGIN, CHECK_AUTH} from '../actionTypes'
+import {LOGIN, CHECK_AUTH, GET_BOOKS, CREATE_BOOK, UPDATE_BOOK, DELETE_BOOK} from '../actionTypes'
 import { setLoading } from "./commonAction";
 import axios from "axios";
 
@@ -21,10 +21,10 @@ export const login = async (dispatch, user, setToken, setUserId) => {
             }
         });
         setToken(
-            response.data.success ? response.data.accessToken : null
+            response.data.accessToken
         );
         setUserId(
-            response.data.success ? response.data.user.id : null
+            response.data.user.id
         );
         dispatch({
             type: LOGIN,
@@ -37,7 +37,7 @@ export const login = async (dispatch, user, setToken, setUserId) => {
         setLoading(dispatch, false);
     }
     catch(e){
-
+        
     }
 };
 //-----------------------------------------
@@ -65,3 +65,129 @@ checkAuth = async (dispatch, _token, _admin_id) => {
         });
 };
 
+
+//-----------------------------------------
+export const getBooks = async (dispatch, page, size) => {
+    setLoading(dispatch, true);
+    try{
+        const response = await axios(`${url}/books?page=${page}&size=${size}`)
+        dispatch({
+            type: GET_BOOKS,
+            payload:{
+                books : response.data.data,
+                pagination: {
+                    currentPage: response.data.currentPage,
+                    totalItems: response.data.totalItems,
+                    totalPages: response.data.totalPages,
+                }
+            } 
+        })
+        setLoading(dispatch, false);
+    }catch(e){
+        
+    }
+}
+
+
+//-----------------------------------------
+export const createBook = async (dispatch, book, token) => {
+    setLoading(dispatch, true);
+    try{
+        const response = await axios({
+            method: "POST",
+            url: `${url}/admin/books/add`,
+            data: {
+                title: book.title,
+                author: book.author,
+                bookGenre: book.bookGenre,
+                price: book.price,
+                score: book.score,
+                thumbnail: book.thumbnail,
+                description: book.description,
+                releaseDate: book.releaseDate
+            },
+            headers: {
+                "Content-Type": " application/json",
+                Authorization: `Bearer ${token}`
+            },
+        })
+        dispatch({
+            type: CREATE_BOOK,
+            payload: response.data
+        })
+        setLoading(dispatch, false);
+    }catch(e){
+        setLoading(dispatch, false);
+        dispatch({
+            type: CREATE_BOOK,
+            payload: {
+                errors: e.response.data.message
+            }
+        });
+    }
+}
+
+//-----------------------------------------
+export const updateBook = async (dispatch, book, token, id) => {
+    setLoading(dispatch, true);
+    try{
+        const response = await axios({
+            method: "PUT",
+            url: `${url}/admin/books/update/${id}`,
+            data: {
+                title: book.title,
+                author: book.author,
+                bookGenre: book.bookGenre,
+                price: book.price,
+                score: book.score,
+                thumbnail: book.thumbnail,
+                description: book.description,
+                releaseDate: book.releaseDate
+            },
+            headers: {
+                "Content-Type": " application/json",
+                Authorization: `Bearer ${token}`
+            },
+        })
+        dispatch({
+            type: UPDATE_BOOK,
+            payload: response.data
+        })
+        setLoading(dispatch, false);
+    }catch(e){
+        setLoading(dispatch, false);
+        dispatch({
+            type: UPDATE_BOOK,
+            payload: {
+                errors: e.response.data.message
+            }
+        });
+    }
+}
+
+//-----------------------------------------
+export const deleteBook = async (dispatch, token, id) => {
+    setLoading(dispatch, true);
+    try{
+        const response = await axios({
+            method: "DELETE",
+            url: `${url}/admin/books/delete/${id}`,
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+        })
+        dispatch({
+            type: DELETE_BOOK,
+            payload: response.data
+        })
+        setLoading(dispatch, false);
+    }catch(e){
+        setLoading(dispatch, false);
+        dispatch({
+            type: DELETE_BOOK,
+            payload: {
+                errors: e.response.data.message
+            }
+        });
+    }
+}

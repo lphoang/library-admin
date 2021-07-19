@@ -1,13 +1,7 @@
 import React, { useEffect } from 'react';
-import { useSelector } from "react-redux";
+import Books from '../Books'
 
 function Home() {
-    const state = useSelector((state) => state);
-
-    useEffect(() => {
-        state.admin.success = null;
-        state.admin.errors = null;
-    }, []);
 
     useEffect(() => {
         document.title = "ADMIN"
@@ -15,7 +9,7 @@ function Home() {
 
     return (
         <div>
-            <h1>Hello</h1>
+            <Books/>
         </div>
     );
 }

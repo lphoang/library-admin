@@ -14,7 +14,7 @@ function Admin() {
     useEffect(() => {
         !state.admin.isAuthenticated
         && history.push(`${match.url}/login`);
-    }, [history, match.url, state.admin.isAuthenticated]);
+    }, [state.admin.isAuthenticated]);
 
     const Error = () => {
         return (
@@ -27,7 +27,7 @@ function Admin() {
         <div className="h-full min-h-screen flex flex-col md:flex-col justify-between">
             <div>
                 <main className="bg-gray-100 bg-opacity-100 min-h-screen ">
-                    <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-2 min-h-screen">
+                    <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-1 min-h-screen">
                         <div className="px-4 py-6 sm:px-0 min-h-screen">
                             <div className="box-border p-4 border-4 bg-white rounded-md min-h-screen">
                                 <div className="container my-12 mx-auto px-4 md:px-12">
