@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import Books from '../Books'
+import Books from '../Books';
 
 function Home() {
 
@@ -9,7 +9,7 @@ function Home() {
 
     return (
         <div>
-            <Books/>
+            <Books />
         </div>
     );
 }

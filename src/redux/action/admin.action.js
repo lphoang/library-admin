@@ -29,7 +29,8 @@ export const login = async (dispatch, user, setToken, setUserId) => {
         dispatch({
             type: LOGIN,
             payload: {
-                user: response.data.user,
+                adminId: response.data.user.id,
+                adminToken: response.data.accessToken,
                 success: response.data.user.enabled,
                 errors: response.data.errors,
             }

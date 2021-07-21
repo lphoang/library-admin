@@ -1,7 +1,8 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { getBooks } from '../../../redux/action/admin.action'
 import { useSelector, useDispatch } from "react-redux";
 import { Table, Button, Breadcrumb, BreadcrumbItem } from "reactstrap";
+import { useHistory } from "react-router-dom"
 import Add from '../Add'
 import Update from '../Update'
 import Delete from '../Delete'
@@ -18,6 +19,13 @@ export default function Books() {
     useEffect(() => {
         getBooks(dispatch, pagination.currentPage, 15);
     }, [pagination, dispatch]);
+
+    const history = useHistory();
+
+    useEffect(() => {
+        !state.admin.isAuthenticated
+        && history.push(`admin/login`);
+    }, [state.admin.isAuthenticated]);
 
     const pageArray = Array.from(Array(pagination.totalPages).keys());
 

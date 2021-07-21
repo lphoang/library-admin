@@ -9,7 +9,6 @@ try {
     _admin_id = ls.get("admin_id");
 } catch (error) {}
 const initialState = {
-    admin: null,
     books: null,
     createdBook: null,
     pagination: {
@@ -20,7 +19,7 @@ const initialState = {
     isAuthenticated:
         _admin_token !== null && _admin_token !== "null" &&_admin_token !== "",
     token: _admin_token || null,
-    user_id: _admin_id || null,
+    admin_id: _admin_id || null,
     loading: false,
     success: null,
     errors: null
@@ -31,20 +30,19 @@ export default function admin(state = initialState, action) {
         case LOGIN: {
             return {
                 ...state,
-                admin: action.payload.user,
-                success: !!action.payload.user.enabled,
-                isAuthenticated: !!action.payload.user.enabled,
-                token: action.payload.user.enabled ? action.payload.accessToken : null,
-                user_id: action.payload.user.enabled ? action.payload.user.id : null,
-                errors: action.payload.user.enabled ? null : action.payload.errors
+                success: !!action.payload.success,
+                isAuthenticated: !!action.payload.success,
+                token: action.payload.success ? action.payload.adminToken : null,
+                admin_id: action.payload.success ? action.payload.adminId : null,
+                errors: action.payload.success ? null : action.payload.errors
             };
         }
         case CHECK_AUTH: {
             return {
                 ...state,
-                isAuthenticated: action.payload.isAuthenticated,
-                token: action.payload.accessToken,
-                user_id: action.payload.user.id,
+                isAuthenticated: action.payload.success,
+                token: action.payload.adminToken,
+                admin_id: action.payload.adminId,
             };
         }
         case GET_BOOKS: {

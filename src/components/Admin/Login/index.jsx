@@ -14,11 +14,11 @@ function Login() {
         password: ""
     });
     const [token, setToken] = useSecureLs("admin_token"); // eslint-disable-line
-    const [userId, setUserId] = useSecureLs("admin_id"); // eslint-disable-line
+    const [adminId, setAdminId] = useSecureLs("admin_id"); // eslint-disable-line
 
     const onSubmitHandler = (e) => {
         e.preventDefault();
-        login(dispatch, user, setToken, setUserId);
+        login(dispatch, user, setToken, setAdminId);
     };
     let history = useHistory();
     useEffect(() => {

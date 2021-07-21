@@ -11,12 +11,12 @@ function Logout() {
         ls.removeAll();
         state.admin.isAuthenticated = false;
         state.admin.token = null;
-        state.admin.user_id = null;
+        state.admin.admin_id = null;
         return () => {
             ls.removeAll();
             state.admin.isAuthenticated = false;
             state.admin.token = null;
-            state.admin.user_id = null;
+            state.admin.admin_id = null;
         };
     }, []); // eslint-disable-line
 
