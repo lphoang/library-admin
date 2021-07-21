@@ -10,9 +10,9 @@ export default function Books() {
     const dispatch = useDispatch();
     const state = useSelector((state) => state);
     const [pagination, setPagination] = useState({
-        currentPage: state.admin.pagination.currentPage,
-        totalItems: state.admin.pagination.totalItems,
-        totalPages: state.admin.pagination.totalPages,
+        currentPage: 0,
+        totalItems: 100,
+        totalPages: 7,
     })
 
     useEffect(() => {
