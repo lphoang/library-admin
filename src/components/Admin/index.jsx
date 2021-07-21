@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, {useEffect} from 'react'
-import {useRouteMatch, Switch, Route, Link, useHistory} from 'react-router-dom'
+import {useRouteMatch, Switch, Route, Link, useHistory, Redirect} from 'react-router-dom'
 import {Breadcrumb, BreadcrumbItem} from "reactstrap";
 import {useSelector} from "react-redux";
 import Home from './Home'
@@ -44,7 +44,8 @@ function Admin() {
                                         </BreadcrumbItem>
                                     </Breadcrumb>
                                     <Switch>
-                                        <Route exact path={`${match.url}`} component={Home}/>
+                                        <Redirect exact from={`${match.url}`} to={`${match.url}/page=0&size=10`}/>
+                                        <Route exact path={`${match.url}/page=:page?&size=:size?`} component={Home}/>
                                         <Route exact path={`${match.url}/login`} component={Login}/>
                                         <Route exact component={Error}/>
                                     </Switch>

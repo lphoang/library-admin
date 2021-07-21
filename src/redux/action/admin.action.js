@@ -6,7 +6,7 @@ import axios from "axios";
 //-----------------------------------------
 const url = process.env.REACT_APP_BASE_URL;
 
-export const login = async (dispatch, user, setToken, setUserId) => {
+export const login = async (dispatch, user, setToken, setAdminId) => {
     setLoading(dispatch, true);
     try{
         const response = await axios({
@@ -23,7 +23,7 @@ export const login = async (dispatch, user, setToken, setUserId) => {
         setToken(
             response.data.accessToken
         );
-        setUserId(
+        setAdminId(
             response.data.user.id
         );
         dispatch({
