@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import Books from '../Books';
+import Search from '../../Global/Search'
 
 function Home() {
 
@@ -9,6 +10,7 @@ function Home() {
 
     return (
         <div>
+            <Search />
             <Books />
         </div>
     );

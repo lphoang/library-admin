@@ -1,5 +1,5 @@
 /* eslint-disable eqeqeq */
-import {LOGIN, CHECK_AUTH, GET_BOOKS, CREATE_BOOK, UPDATE_BOOK, DELETE_BOOK} from '../actionTypes'
+import {LOGIN, CHECK_AUTH, GET_BOOKS, GET_BOOKS_BY_TITLE, CREATE_BOOK, UPDATE_BOOK, DELETE_BOOK} from '../actionTypes'
 import { setLoading } from "./commonAction";
 import axios from "axios";
 
@@ -190,5 +190,23 @@ export const deleteBook = async (dispatch, token, id) => {
                 errors: e.response.data.message
             }
         });
+    }
+}
+
+//----------------------------------------------------
+export const getBooksByTitle = async (dispatch, title) => {
+    setLoading(dispatch, true);
+    try{
+        const res = await axios({
+            method: "GET",
+            url: `${url}/books/search?t=${title}`
+        })
+        dispatch({
+            type: GET_BOOKS_BY_TITLE,
+            payload: res.data,
+        })
+        setLoading(dispatch, false);
+    }catch(e) {
+        console.log(e)
     }
 }

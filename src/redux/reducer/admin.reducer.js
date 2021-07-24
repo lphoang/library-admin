@@ -1,4 +1,4 @@
-import {LOGIN, CHECK_AUTH, SET_LOADING, GET_BOOKS, CREATE_BOOK, UPDATE_BOOK, DELETE_BOOK, SET_ERROR} from "../actionTypes";
+import {LOGIN, CHECK_AUTH, SET_LOADING, GET_BOOKS, CREATE_BOOK, UPDATE_BOOK, DELETE_BOOK, SET_ERROR, GET_BOOKS_BY_TITLE} from "../actionTypes";
 import SecureLS from "secure-ls";
 
 let ls = new SecureLS({ encodingType: "aes", isCompression: false });
@@ -11,6 +11,7 @@ try {
 const initialState = {
     books: null,
     createdBook: null,
+    searchedBooks: null,
     pagination: {
         currentPage: null,
         totalItems: null,
@@ -54,6 +55,12 @@ export default function admin(state = initialState, action) {
                     totalItems: action.payload.pagination.totalItems,
                     totalPages: action.payload.pagination.totalPages,
                 }
+            }
+        }
+        case GET_BOOKS_BY_TITLE: {
+            return{
+                ...state,
+                searchedBooks: action.payload,
             }
         }
         case CREATE_BOOK: {

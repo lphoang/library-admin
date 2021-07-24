@@ -28,10 +28,10 @@ export default function Books() {
     useEffect(() => {
         !state.admin.isAuthenticated
             && history.push(`admin/login`);
-    }, [state.admin.isAuthenticated]);
-
-    const pageArray = Array.from(Array(pagination.totalPages).keys());
-
+        }, [state.admin.isAuthenticated]);
+        
+        const pageArray = Array.from(Array(pagination.totalPages).keys());
+    
 
     return (
         <section className="px-4 md:px-10 lg:px-16">
@@ -56,7 +56,7 @@ export default function Books() {
                             return (
                                 <tr key={key}>
                                     <td>
-                                        {key + 1}
+                                        {page*10 + key + 1}
                                     </td>
                                     <th>{book.title}</th>
                                     <td>{book.author.fullName}</td>

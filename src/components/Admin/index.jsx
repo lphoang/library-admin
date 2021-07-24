@@ -5,6 +5,7 @@ import {Breadcrumb, BreadcrumbItem} from "reactstrap";
 import {useSelector} from "react-redux";
 import Home from './Home'
 import Login from './Login'
+import SearchResult from '../Global/SearchResult'
 
 function Admin() {
     const match = useRouteMatch();
@@ -46,6 +47,7 @@ function Admin() {
                                     <Switch>
                                         <Redirect exact from={`${match.url}`} to={`${match.url}/page=0&size=10`}/>
                                         <Route exact path={`${match.url}/page=:page?&size=:size?`} component={Home}/>
+                                        <Route exact path={[`${match.url}/search/t=:t?`, "search"]} component={SearchResult}/>
                                         <Route exact path={`${match.url}/login`} component={Login}/>
                                         <Route exact component={Error}/>
                                     </Switch>
